@@ -4,18 +4,17 @@
 #
 Name     : perl-Domain-PublicSuffix
 Version  : 0.14.1
-Release  : 2
+Release  : 3
 URL      : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.14.1.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.14.1.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libd/libdomain-publicsuffix-perl/libdomain-publicsuffix-perl_0.14.1-3.debian.tar.xz
 Summary  : 'Parse a domain down to root'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0 MPL-2.0-no-copyleft-exception
-Requires: perl-Domain-PublicSuffix-bin
-Requires: perl-Domain-PublicSuffix-license
-Requires: perl-Domain-PublicSuffix-man
-Requires: perl(Class::Accessor::Fast)
-Requires: perl(Net::IDN::Encode)
+Requires: perl-Domain-PublicSuffix-bin = %{version}-%{release}
+Requires: perl-Domain-PublicSuffix-license = %{version}-%{release}
+Requires: perl-Domain-PublicSuffix-man = %{version}-%{release}
+BuildRequires : buildreq-cpan
 BuildRequires : perl(Class::Accessor::Fast)
 BuildRequires : perl(Net::IDN::Encode)
 
@@ -28,11 +27,21 @@ PublicSuffix file.
 %package bin
 Summary: bin components for the perl-Domain-PublicSuffix package.
 Group: Binaries
-Requires: perl-Domain-PublicSuffix-license
-Requires: perl-Domain-PublicSuffix-man
+Requires: perl-Domain-PublicSuffix-license = %{version}-%{release}
+Requires: perl-Domain-PublicSuffix-man = %{version}-%{release}
 
 %description bin
 bin components for the perl-Domain-PublicSuffix package.
+
+
+%package dev
+Summary: dev components for the perl-Domain-PublicSuffix package.
+Group: Development
+Requires: perl-Domain-PublicSuffix-bin = %{version}-%{release}
+Provides: perl-Domain-PublicSuffix-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-Domain-PublicSuffix package.
 
 
 %package license
@@ -52,10 +61,10 @@ man components for the perl-Domain-PublicSuffix package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n Domain-PublicSuffix-0.14
-mkdir -p %{_topdir}/BUILD/Domain-PublicSuffix-0.14/deblicense/
+cd ..
+%setup -q -T -D -n Domain-PublicSuffix-0.14 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Domain-PublicSuffix-0.14/deblicense/
 
 %build
@@ -80,13 +89,13 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-Domain-PublicSuffix
-cp LICENSE %{buildroot}/usr/share/doc/perl-Domain-PublicSuffix/LICENSE
-cp deblicense/copyright %{buildroot}/usr/share/doc/perl-Domain-PublicSuffix/deblicense_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Domain-PublicSuffix
+cp LICENSE %{buildroot}/usr/share/package-licenses/perl-Domain-PublicSuffix/LICENSE
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Domain-PublicSuffix/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -95,20 +104,23 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Domain/PublicSuffix.pm
-/usr/lib/perl5/site_perl/5.26.1/Domain/PublicSuffix/Default.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Domain/PublicSuffix.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Domain/PublicSuffix/Default.pm
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/get_root_domain
 
-%files license
+%files dev
 %defattr(-,root,root,-)
-/usr/share/doc/perl-Domain-PublicSuffix/LICENSE
-/usr/share/doc/perl-Domain-PublicSuffix/deblicense_copyright
-
-%files man
-%defattr(-,root,root,-)
-/usr/share/man/man1/get_root_domain.1
 /usr/share/man/man3/Domain::PublicSuffix.3
 /usr/share/man/man3/Domain::PublicSuffix::Default.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Domain-PublicSuffix/LICENSE
+/usr/share/package-licenses/perl-Domain-PublicSuffix/deblicense_copyright
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/get_root_domain.1
