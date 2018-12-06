@@ -4,7 +4,7 @@
 #
 Name     : perl-Domain-PublicSuffix
 Version  : 0.14.1
-Release  : 5
+Release  : 6
 URL      : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.14.1.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.14.1.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libd/libdomain-publicsuffix-perl/libdomain-publicsuffix-perl_0.14.1-3.debian.tar.xz
