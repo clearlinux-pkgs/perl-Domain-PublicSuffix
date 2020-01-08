@@ -4,7 +4,7 @@
 #
 Name     : perl-Domain-PublicSuffix
 Version  : 0.16
-Release  : 13
+Release  : 14
 URL      : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.16.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.16.tar.gz
 Summary  : 'Parse a domain down to root'
@@ -13,6 +13,7 @@ License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-Domain-PublicSuffix-bin = %{version}-%{release}
 Requires: perl-Domain-PublicSuffix-license = %{version}-%{release}
 Requires: perl-Domain-PublicSuffix-man = %{version}-%{release}
+Requires: perl-Domain-PublicSuffix-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : perl(Class::Accessor::Fast)
 BuildRequires : perl(Net::IDN::Encode)
@@ -38,7 +39,6 @@ Group: Development
 Requires: perl-Domain-PublicSuffix-bin = %{version}-%{release}
 Provides: perl-Domain-PublicSuffix-devel = %{version}-%{release}
 Requires: perl-Domain-PublicSuffix = %{version}-%{release}
-Requires: perl-Domain-PublicSuffix = %{version}-%{release}
 
 %description dev
 dev components for the perl-Domain-PublicSuffix package.
@@ -60,8 +60,18 @@ Group: Default
 man components for the perl-Domain-PublicSuffix package.
 
 
+%package perl
+Summary: perl components for the perl-Domain-PublicSuffix package.
+Group: Default
+Requires: perl-Domain-PublicSuffix = %{version}-%{release}
+
+%description perl
+perl components for the perl-Domain-PublicSuffix package.
+
+
 %prep
 %setup -q -n Domain-PublicSuffix-0.16
+cd %{_builddir}/Domain-PublicSuffix-0.16
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -99,8 +109,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Domain/PublicSuffix.pm
-/usr/lib/perl5/vendor_perl/5.28.2/Domain/PublicSuffix/Default.pm
 
 %files bin
 %defattr(-,root,root,-)
@@ -118,3 +126,8 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/get_root_domain.1
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Domain/PublicSuffix.pm
+/usr/lib/perl5/vendor_perl/5.30.1/Domain/PublicSuffix/Default.pm
