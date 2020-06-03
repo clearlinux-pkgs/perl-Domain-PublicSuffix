@@ -4,7 +4,7 @@
 #
 Name     : perl-Domain-PublicSuffix
 Version  : 0.17
-Release  : 16
+Release  : 17
 URL      : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.17.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.17.tar.gz
 Summary  : 'Parse a domain down to root'
@@ -129,5 +129,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.2/Domain/PublicSuffix.pm
-/usr/lib/perl5/vendor_perl/5.30.2/Domain/PublicSuffix/Default.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Domain/PublicSuffix.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Domain/PublicSuffix/Default.pm
