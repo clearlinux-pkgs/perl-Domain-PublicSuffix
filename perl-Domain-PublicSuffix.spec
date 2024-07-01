@@ -5,7 +5,7 @@
 #
 Name     : perl-Domain-PublicSuffix
 Version  : 0.20
-Release  : 29
+Release  : 30
 URL      : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.20.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NM/NMELNICK/Domain-PublicSuffix-0.20.tar.gz
 Summary  : 'Parse a domain down to root'
